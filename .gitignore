@@ -1,0 +1,8 @@
+node_modules
+coverage
+/.idea/
+/.vscode/
+*.js
+*.log
+dist/
+yarn.lock
