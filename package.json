@@ -1,9 +1,12 @@
 {
     "name": "pgsql-minify",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Generate a consistently formatted, minified version of any valid postgres SQL",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
+    "files": [
+        "dist/**/*"
+    ],
     "scripts": {
         "build": "rm -fr dist && tsc -p tsconfig.build.json --strict && yarn test",
         "test": "jest"
