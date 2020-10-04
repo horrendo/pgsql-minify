@@ -1,6 +1,6 @@
 {
     "name": "pgsql-minify",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Generate a consistently formatted, minified version of any valid postgres SQL",
     "main": "index.js",
     "scripts": {
