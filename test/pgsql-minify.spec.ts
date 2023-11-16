@@ -125,4 +125,16 @@ describe('minify', () => {
             expect(minify(test[0], options)).toEqual(test[1]);
         }
     });
+
+    it('Correctly removes a trailing semicolon', () => {
+        const testCases: ReadonlyArray<[string, string]> = [
+            [`select  --   hello\n 123;`, `select 123`],
+            [`select\n/*\n     hello\n\n\n\tworld\n\n*\n\n*/123+1`, `select 123 + 1`],
+            [`;`, `;`]
+        ];
+        const options: PgSqlMinifyOptions = { includeTrailingSemicolon: false };
+        for (const test of testCases) {
+            expect(minify(test[0], options)).toEqual(test[1]);
+        }
+    });
 });

@@ -25,6 +25,7 @@ export type Token = [TokenType, string?];
 export interface PgSqlMinifyOptions {
     keywords?: Set<string>;
     includeComments?: boolean;
+    includeTrailingSemicolon?: boolean;
 }
 
 const defaultKeywords = new Set(
@@ -536,7 +537,8 @@ export function lex(rawSQL: string, options?: PgSqlMinifyOptions): Token[] {
  */
 export function minify(rawSQL: string, options?: PgSqlMinifyOptions): string {
     const tokens = lex(rawSQL, options);
-    const includeComments = (options && options.includeComments) || false;
+    const includeComments = options?.includeComments ?? false;
+    const includeTrailingSemicolon = options?.includeTrailingSemicolon ?? true;
     if (tokens.length === 0) {
         return '';
     }
@@ -548,6 +550,8 @@ export function minify(rawSQL: string, options?: PgSqlMinifyOptions): string {
             if (includeComments) {
                 minified += ` /* ${token[1]} */`;
             }
+        } else if (token[0] === `;` && tokens.length > 1 && !includeTrailingSemicolon) {
+            continue;
         } else if ([`)`, `]`, `;`, `,`, `::`, `:`, `.`].includes(token[0])) {
             minified += token[0];
         } else if (token[0] === `..`) {
